@@ -1,0 +1,261 @@
+html{
+    background-color: #eeeeee;
+}
+body{
+    text-align: center;
+}
+
+
+table {
+    font-family: "Lucida Sans Unicode", "Lucida Grande", Sans-Serif;
+    font-size: 18px;
+    border-radius: 15px;
+    border-spacing: 0;
+    text-align: center;
+    margin: auto;
+}
+
+tbody{
+    background: #F8E391;
+}
+
+th {
+    background: #BCEBDD;
+    color: #000000;
+    padding: 10px 20px;
+}
+
+th, td {
+    border-style: solid;
+    border-width: 0 1px 1px 0;
+    border-color: white;
+}
+
+th:first-child, td:first-child {
+    text-align: left;
+}
+
+
+th:last-child {
+    border-right: none;
+}
+
+td {
+    padding: 10px 20px;
+}
+
+tr td:last-child {
+    border-right: none;
+}
+
+th:hover {
+    background-image: linear-gradient(to bottom right, #888, #eee);
+    cursor: pointer;
+}
+
+tr:hover {
+    background-color: #f3cc2f;
+    cursor: pointer;
+}
+
+
+button {
+    width: 250px;
+    font-size: 1rem;
+    line-height: 2;
+    border-radius: 10px;
+    border: none;
+    background-image: linear-gradient(to bottom right, #777, #ddd);
+    box-shadow: 1px 1px 1px #000000,
+    inset 2px 3px 5px rgba(0,0,0,0.3),
+    inset -2px -3px 5px rgba(255,255,255,0.5);
+    position: relative;
+
+}
+
+button:focus, button:hover {
+    background-image: linear-gradient(to bottom right, #888, #eee);
+}
+
+.studentCard{
+    width: 500px;
+    margin: 0 auto;
+    background-color: #7970ff;
+    padding: 10px;
+    border: 5px solid #340aa2;
+    border-radius: 20px;
+}
+
+h2{
+    font-size: 30px;
+}
+
+#studData{
+    font-size: 20px;
+    text-align: left;
+}
+
+
+#ballsWaveG{
+    position:relative;
+    width:125px;
+    height:29px;
+    margin:auto;
+}
+
+.ballsWaveG{
+    position:absolute;
+    top:0;
+    background-color:rgb(0,0,0);
+    width:16px;
+    height:16px;
+    animation-name:ballsWaveG;
+    -o-animation-name:ballsWaveG;
+    -ms-animation-name:ballsWaveG;
+    -webkit-animation-name:ballsWaveG;
+    -moz-animation-name:ballsWaveG;
+    animation-duration:1.5s;
+    -o-animation-duration:1.5s;
+    -ms-animation-duration:1.5s;
+    -webkit-animation-duration:1.5s;
+    -moz-animation-duration:1.5s;
+    animation-iteration-count:infinite;
+    -o-animation-iteration-count:infinite;
+    -ms-animation-iteration-count:infinite;
+    -webkit-animation-iteration-count:infinite;
+    -moz-animation-iteration-count:infinite;
+    animation-direction:normal;
+    -o-animation-direction:normal;
+    -ms-animation-direction:normal;
+    -webkit-animation-direction:normal;
+    -moz-animation-direction:normal;
+    border-radius:8px;
+    -o-border-radius:8px;
+    -ms-border-radius:8px;
+    -webkit-border-radius:8px;
+    -moz-border-radius:8px;
+}
+
+#ballsWaveG_1{
+    left:0;
+    animation-delay:0.6s;
+    -o-animation-delay:0.6s;
+    -ms-animation-delay:0.6s;
+    -webkit-animation-delay:0.6s;
+    -moz-animation-delay:0.6s;
+}
+
+#ballsWaveG_2{
+    left:16px;
+    animation-delay:0.75s;
+    -o-animation-delay:0.75s;
+    -ms-animation-delay:0.75s;
+    -webkit-animation-delay:0.75s;
+    -moz-animation-delay:0.75s;
+}
+
+#ballsWaveG_3{
+    left:31px;
+    animation-delay:0.9s;
+    -o-animation-delay:0.9s;
+    -ms-animation-delay:0.9s;
+    -webkit-animation-delay:0.9s;
+    -moz-animation-delay:0.9s;
+}
+
+#ballsWaveG_4{
+    left:47px;
+    animation-delay:1.05s;
+    -o-animation-delay:1.05s;
+    -ms-animation-delay:1.05s;
+    -webkit-animation-delay:1.05s;
+    -moz-animation-delay:1.05s;
+}
+
+#ballsWaveG_5{
+    left:62px;
+    animation-delay:1.2s;
+    -o-animation-delay:1.2s;
+    -ms-animation-delay:1.2s;
+    -webkit-animation-delay:1.2s;
+    -moz-animation-delay:1.2s;
+}
+
+#ballsWaveG_6{
+    left:78px;
+    animation-delay:1.35s;
+    -o-animation-delay:1.35s;
+    -ms-animation-delay:1.35s;
+    -webkit-animation-delay:1.35s;
+    -moz-animation-delay:1.35s;
+}
+
+#ballsWaveG_7{
+    left:94px;
+    animation-delay:1.5s;
+    -o-animation-delay:1.5s;
+    -ms-animation-delay:1.5s;
+    -webkit-animation-delay:1.5s;
+    -moz-animation-delay:1.5s;
+}
+
+#ballsWaveG_8{
+    left:109px;
+    animation-delay:1.64s;
+    -o-animation-delay:1.64s;
+    -ms-animation-delay:1.64s;
+    -webkit-animation-delay:1.64s;
+    -moz-animation-delay:1.64s;
+}
+
+
+
+@keyframes ballsWaveG{
+    0%{
+        background-color:rgb(0,0,0);
+    }
+
+    100%{
+        background-color:rgb(255,255,255);
+    }
+}
+
+@-o-keyframes ballsWaveG{
+    0%{
+        background-color:rgb(0,0,0);
+    }
+
+    100%{
+        background-color:rgb(255,255,255);
+    }
+}
+
+@-ms-keyframes ballsWaveG{
+    0%{
+        background-color:rgb(0,0,0);
+    }
+
+    100%{
+        background-color:rgb(255,255,255);
+    }
+}
+
+@-webkit-keyframes ballsWaveG{
+    0%{
+        background-color:rgb(0,0,0);
+    }
+
+    100%{
+        background-color:rgb(255,255,255);
+    }
+}
+
+@-moz-keyframes ballsWaveG{
+    0%{
+        background-color:rgb(0,0,0);
+    }
+
+    100%{
+        background-color:rgb(255,255,255);
+    }
+}

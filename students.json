@@ -1,0 +1,58 @@
+[
+    {
+        "id": 1,
+        "name": "Василий",
+        "surname": "Кукушкин",
+        "averagePoint": "4.7",
+        "group": "148"
+    },
+     {
+        "id": 2,
+        "name": "Олег",
+        "surname": "Хурма",
+        "averagePoint": "3.6",
+        "group": "148"
+    },
+	 {
+        "id": 3,
+        "name": "Петр",
+        "surname": "Первый",
+        "averagePoint": "5.0",
+        "group": "148"
+    },
+	 {
+        "id": 4,
+        "name": "Студент",
+        "surname": "Номерчетыре",
+        "averagePoint": "4.2",
+        "group": "126"
+    },
+	 {
+        "id": 5,
+        "name": "Кирил",
+        "surname": "Дыбил",
+        "averagePoint": "1.1",
+        "group": "126"
+    },
+	 {
+        "id": 6,
+        "name": "Псих",
+        "surname": "Одиночка",
+        "averagePoint": "3.3",
+        "group": "156"
+    },
+    {
+        "id": 8,
+        "name": "Алексей",
+        "surname": "Неалексей",
+        "averagePoint": "3.9",
+        "group": "128"
+    },
+  {
+    "id": 10,
+    "name": "Дмитрий",
+    "surname": "Петрухин",
+    "averagePoint": "4.2",
+    "group": "128"
+  }
+]
