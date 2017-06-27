@@ -54,5 +54,19 @@
     "surname": "Петрухин",
     "averagePoint": "4.2",
     "group": "128"
+  },
+	  {
+    "id": 15,
+    "name": "Старик",
+    "surname": "Хотабыч",
+    "averagePoint": "3.4,
+    "group": "128"
+  },
+	  {
+    "id": 12,
+    "name": "Илья",
+    "surname": "Лапух",
+    "averagePoint": "4.5",
+    "group": "118"
   }
 ]
