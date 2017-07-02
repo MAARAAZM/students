@@ -3,11 +3,12 @@ html{
 }
 body{
     text-align: center;
+    font-family: 'Merriweather', serif;
+
 }
 
 
 table {
-    font-family: "Lucida Sans Unicode", "Lucida Grande", Sans-Serif;
     font-size: 18px;
     border-radius: 15px;
     border-spacing: 0;
@@ -32,7 +33,7 @@ th, td {
 }
 
 th:first-child, td:first-child {
-    text-align: left;
+    text-align: center;
 }
 
 
@@ -59,6 +60,7 @@ tr:hover {
 }
 
 
+
 button {
     width: 250px;
     font-size: 1rem;
@@ -73,12 +75,31 @@ button {
 
 }
 
-button:focus, button:hover {
+button:focus, .button:hover {
+    background-image: linear-gradient(to bottom right, #888, #eee);
+}
+
+.button {
+    width: 250px;
+    font-size: 1rem;
+    line-height: 2;
+    border-radius: 10px;
+    background-image: linear-gradient(to bottom right, #777, #ddd);
+    box-shadow: 1px 1px 1px #000000,
+    inset 2px 3px 5px rgba(0,0,0,0.3),
+    inset -2px -3px 5px rgba(255,255,255,0.5);
+    position: relative;
+    border: 1px solid #333;
+    display: inline-block;
+    text-decoration: none;
+    color: #000;
+}
+.button:hover {
     background-image: linear-gradient(to bottom right, #888, #eee);
 }
 
 .studentCard{
-    width: 500px;
+    width: 450px;
     margin: 0 auto;
     background-color: #7970ff;
     padding: 10px;
@@ -88,6 +109,22 @@ button:focus, button:hover {
 
 h2{
     font-size: 30px;
+}
+
+img{
+    alignment: left;
+    width: 150px;
+    height: 200px;
+    float: right;
+    margin: 5px;
+    border: solid 2px #dddddd;
+    border-radius: 10px;
+
+}
+
+.checkbox{
+    height: 20px;
+    width: 20px;
 }
 
 #studData{

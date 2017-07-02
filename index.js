@@ -1,199 +1,248 @@
-var button = document.getElementById("button");
-var table = document.getElementById("table");
-var head = document.getElementById("head");
-var download = document.getElementById("ballsWaveG");
-var returnTable = document.getElementById("returnTable");
-var studentCard = document.getElementById('studentCard');
-var studData = document.getElementById('studData');
+(function () {
 
-function loadStudents() {
+    var button = document.getElementById("button");
+    var table = document.getElementById("table");
+    var header = document.getElementById("header");
+    var body = document.getElementById('tableBody');
+    var download = document.getElementById("ballsWaveG");
+    var returnTable = document.getElementById("returnTable");
+    var studentCard = document.getElementById('studentCard');
+    var studData = document.getElementById('studData');
+    var compareButton = document.getElementById('compare');
+    var uncheckButton = document.getElementById('uncheck');
 
-    var xhr = new XMLHttpRequest();
+    function loadStudents() {
 
-    xhr.open('GET', 'students.json', true);
+        var xhr = new XMLHttpRequest();
 
-    xhr.send();
+        xhr.open('GET', 'students.json', true);
 
-    xhr.onreadystatechange = function() {
-        if (xhr.readyState != 4) return;
+        xhr.send();
 
-        download.parentNode.removeChild(download);
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState !== 4) return;
 
-        if (xhr.status != 200) {
-            alert(xhr.status + ': ' + xhr.statusText);
-        } else {
-            try {
-                var students = JSON.parse(xhr.responseText);
-            } catch (e) {
-                alert("Некорректный ответ " + e.message);
+            download.style.visibility = 'hidden';
+            download.style.position = 'absolute';
+
+            if (xhr.status !== 200) {
+                alert(xhr.status + ': ' + xhr.statusText);
+            } else {
+                try {
+                    var students = JSON.parse(xhr.responseText);
+                } catch (e) {
+                    alert("Некорректный ответ " + e.message);
+                }
+                header.innerHTML = 'Список студентов';
+
+                showStudents(students);
+
+                if (localStorage.getItem('colNum')) {
+                    sortGrid(localStorage.getItem('colNum'), localStorage.getItem('type'), localStorage.getItem('sorted'))
+                }
+
+                if (localStorage.getItem('cardRow')) {
+                    studentDataRequest(+localStorage.getItem('cardRow'))
+                }
+
             }
-            head.innerHTML = 'Список студентов';
 
-            showStudents(students);
+        };
 
-            if (getCookie('colNum')){
-                sortGrid(getCookie('colNum'), getCookie('type'), getCookie('sorted'))
+        button.parentNode.removeChild(button);
+        download.style.visibility = 'visible';
+        download.style.position = '';
+        localStorage.setItem('isLoaded', 1)
+    }
+
+    function studentDataRequest(row) {
+        var studentId = table.rows[row].cells[0].innerHTML;
+        var xhr = new XMLHttpRequest();
+        var studentFile = "studentsData/id" + studentId + ".json";
+
+        xhr.open('GET', studentFile, true);
+
+        xhr.send();
+
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState !== 4) return;
+            download.style.visibility = 'hidden';
+            download.style.position = 'absolute';
+
+            if (xhr.status !== 200) {
+                alert(xhr.status + ': ' + xhr.statusText);
+            } else {
+                try {
+                     var student = JSON.parse(xhr.responseText);
+
+                } catch (e) {
+                    alert("Некорректный ответ " + e.message);
+                }
+                getCard(row, student);
             }
 
-            if (getCookie('cardRow')){
-                getCard(+getCookie('cardRow'))
-            }
-
-        }
-
-    };
-
-    button.parentNode.removeChild(button);
-    download.style.visibility = 'visible';
-    setCookie('isLoaded', 1, {expires: 3600*500})
-}
+        };
+        compareButton.style.visibility = 'hidden';
+        uncheckButton.style.visibility = 'hidden';
+        table.style.visibility = 'hidden';
+        table.style.position = 'absolute';
+        download.style.visibility = 'visible';
+        download.style.position = '';
+    }
 
 
-function showStudents(students) {
-    var contents = '<thead><th data-type="number">№</th><th data-type="string">Имя</th><th data-type="string">Фамилия</th><th data-type="number">Группа</th><th data-type="number">Средний бал</th></thead><tbody>';
+    function showStudents(students) {
+        var contents = '';
         for (var i = 0; i < students.length; i++) {
-        contents += "<tr><td>" + students[i].id + "</td><td>" + students[i].name + "</td><td>"
-                + students[i].surname + "</td><td>" + students[i].group  + "</td><td>" +  students[i].averagePoint + "</td></tr>";
+            var student = students[i];
+            contents += '<tr>';
+            for (var key in student) {
+                contents += "<td>" + student[key] + "</td>";
+            }
+            contents += "<td><input data-id ="+ student.id + " type='checkbox' class = 'checkbox'></td>";
+            contents += '</tr>';
+        }
+        body.innerHTML = '<table>' + contents + '</table>';
+        table.style.visibility = '';
+        compareButton.style.visibility = '';
+        uncheckButton.style.visibility = '';
     }
-    contents += '</tbody>';
-
-    table.innerHTML = '<table>' + contents + '</table>';
-}
 
 
+    function sortGrid(colNum, type, sorted) {
 
-function sortGrid(colNum, type, sorted) {
-    var tbody = table.getElementsByTagName('tbody')[0];
+        var rowsArray = [].slice.call(body.rows);
 
-    var rowsArray = [].slice.call(tbody.rows);
+        var compare;
 
-    var compare;
+        table.tHead.rows[0].cells[colNum].style.backgroundColor = 'grey';
 
-    table.tHead.rows[0].cells[colNum].style.backgroundColor = 'grey';
+        if (sorted === '1') {
 
-    if (sorted=='1'){
+            table.tHead.rows[0].cells[colNum].setAttribute("sorted", "2");
 
-        table.tHead.rows[0].cells[colNum].setAttribute("sorted", "2");
+            switch (type) {
+                case 'number':
+                    compare = function (rowA, rowB) {
+                        return rowB.cells[colNum].innerHTML - rowA.cells[colNum].innerHTML;
+                    };
+                    break;
+                case 'string':
+                    compare = function (rowA, rowB) {
+                        return rowA.cells[colNum].innerHTML < rowB.cells[colNum].innerHTML ? 1 : -1;
+                    };
+                    break;
+            }
+        }
+        else {
+            table.tHead.rows[0].cells[colNum].setAttribute("sorted", "1");
 
-        switch (type) {
-            case 'number':
-                compare = function(rowA, rowB) {
-                    return  rowB.cells[colNum].innerHTML - rowA.cells[colNum].innerHTML;
-                };
-                break;
-            case 'string':
-                compare = function(rowA, rowB) {
-                    return rowA.cells[colNum].innerHTML < rowB.cells[colNum].innerHTML ? 1 : -1;
-                };
-                break;
+            switch (type) {
+                case 'number':
+                    compare = function (rowA, rowB) {
+                        return rowA.cells[colNum].innerHTML - rowB.cells[colNum].innerHTML;
+                    };
+                    break;
+                case 'string':
+                    compare = function (rowA, rowB) {
+                        return rowA.cells[colNum].innerHTML > rowB.cells[colNum].innerHTML ? 1 : -1;
+                    };
+                    break;
+            }
+        }
+
+        rowsArray.sort(compare);
+
+        table.removeChild(body);
+
+        for (var i = 0; i < rowsArray.length; i++) {
+            body.appendChild(rowsArray[i]);
+        }
+
+        table.appendChild(body);
+
+        localStorage.setItem('colNum', colNum);
+        localStorage.setItem('type', type);
+        localStorage.setItem('sorted', sorted);
+    }
+
+
+    function getCard(row, student) {
+        studentCard.style.visibility = 'visible';
+        header.innerHTML = '';
+        studData.innerHTML = '';
+        var photo = document.getElementById('photo');
+        photo.setAttribute("src", student.img);
+        delete student.img;
+
+        for (var key in student) {
+            var studDataRow = student[key];
+
+            studData.innerHTML += '<p>' + studDataRow[0] + ' : ' + studDataRow[1] + '</p>'
+        }
+        localStorage.setItem('cardRow', row);
+    }
+
+    function tableOnclick(e) {
+
+        if (e.target.tagName === 'TH') {
+            var th = table.getElementsByTagName("TH");
+            for (var i = 0; i < th.length; i++) {
+                th[i].style.backgroundColor = '#BCEBDD';
+            }
+            sortGrid(e.target.cellIndex, e.target.getAttribute('data-type'), e.target.getAttribute('sorted'));
+        }
+
+        if (e.target.tagName === 'TD') {
+            if (e.target.firstChild.tagName === 'INPUT') {
+                e.target.firstChild.checked = !e.target.firstChild.checked;
+                } else studentDataRequest(e.target.parentNode.rowIndex);
         }
     }
-    else {
-        table.tHead.rows[0].cells[colNum].setAttribute("sorted", "1");
 
-        switch (type) {
-            case 'number':
-                compare = function(rowA, rowB) {
-                    return rowA.cells[colNum].innerHTML - rowB.cells[colNum].innerHTML;
-                };
-                break;
-            case 'string':
-                compare = function(rowA, rowB) {
-                    return rowA.cells[colNum].innerHTML > rowB.cells[colNum].innerHTML ? 1 : -1;
-                };
-                break;
+    function returnTableOnclick() {
+        compareButton.style.visibility = '';
+        uncheckButton.style.visibility = '';
+        table.style.visibility = 'visible';
+        table.style.position = '';
+        studentCard.style.visibility = 'hidden';
+        header.innerHTML = 'Список студентов';
+        localStorage.removeItem('cardRow');
+    }
+
+    if (localStorage.getItem('isLoaded')) {
+        loadStudents()
+    }
+
+    function uncheck() {
+        var checkboxes =  document.getElementsByClassName('checkbox');
+        for (var i = 0; i<checkboxes.length; i++) {
+            checkboxes[i].checked = false
+            }
+
+    }
+
+    function compareButtonOnclick(e) {
+        var checkboxes =  document.getElementsByClassName('checkbox');
+        var compareJSON = [];
+        var isChecked = 0;
+        for (var i = 0; i<checkboxes.length; i++) {
+            if (checkboxes[i].checked) {
+                isChecked++;
+                compareJSON.push(checkboxes[i].getAttribute('data-id'))
+            }
         }
-    }
-
-    rowsArray.sort(compare);
-
-    table.removeChild(tbody);
-
-    for (var i = 0; i < rowsArray.length; i++) {
-        tbody.appendChild(rowsArray[i]);
-    }
-
-    table.appendChild(tbody);
-
-    setCookie('colNum', colNum, {expires: 3600*500});
-    setCookie('type', type, {expires: 3600*500});
-    setCookie('sorted', sorted, {expires: 3600*500});
-}
-
-
-function getCard(row) {
-    table.style.visibility = 'hidden';
-    table.style.position = 'absolute';
-    studentCard.style.visibility = 'visible';
-    head.innerHTML = '';
-    studData.innerHTML = '';
-
-    for(var i = 0; i< table.rows[row].cells.length; i++){
-        studData.innerHTML += '<p>'+ table.tHead.rows[0].cells[i].innerHTML + ' :     ' + table.rows[row].cells[i].innerHTML + '</p>'
-    }
-    setCookie('cardRow', row, {expires: 3600*500});
-}
-
-function setCookie(name, value, options) {
-    options = options || {};
-
-    var expires = options.expires;
-
-    if (typeof expires == "number" && expires) {
-        var d = new Date();
-        d.setTime(d.getTime() + expires * 1000);
-        expires = options.expires = d;
-    }
-    if (expires && expires.toUTCString) {
-        options.expires = expires.toUTCString();
-    }
-
-    value = encodeURIComponent(value);
-
-    var updatedCookie = name + "=" + value;
-
-    for (var propName in options) {
-        updatedCookie += "; " + propName;
-        var propValue = options[propName];
-        if (propValue !== true) {
-            updatedCookie += "=" + propValue;
+        if (isChecked < 2) {
+            alert('Выберете двух или более студентов!');
+            e.preventDefault();
         }
+        localStorage.setItem('compareJSON', JSON.stringify(compareJSON))
     }
 
-    document.cookie = updatedCookie;
-}
+    compareButton.addEventListener('click', compareButtonOnclick);
+    uncheckButton.addEventListener('click', uncheck);
+    table.addEventListener('click', tableOnclick);
+    returnTable.addEventListener('click', returnTableOnclick);
+    button.addEventListener('click', loadStudents)
 
-function getCookie(name) {
-    var matches = document.cookie.match(new RegExp(
-        "(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + "=([^;]*)"
-    ));
-    return matches ? decodeURIComponent(matches[1]) : undefined;
-}
-
-
-if (getCookie('isLoaded')){
-    loadStudents()
-}
-
-
-
-table.onclick = function(e) {
-    if (e.target.tagName == 'TH') {
-        var th = table.getElementsByTagName("TH");
-        for (var i = 0; i < th.length; i++) {
-            th[i].style.backgroundColor = '#BCEBDD';
-        }
-        sortGrid(e.target.cellIndex, e.target.getAttribute('data-type'), e.target.getAttribute('sorted'));
-    }
-
-    if (e.target.tagName == 'TD') getCard(e.target.parentNode.rowIndex)
-};
-
-returnTable.onclick = function () {
-    table.style.visibility = 'visible';
-    table.style.position = '';
-    studentCard.style.visibility = 'hidden';
-    head.innerHTML = 'Список студентов';
-    setCookie('cardRow', '', {expires: -1});
-};
-
+})();

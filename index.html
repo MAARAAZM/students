@@ -3,14 +3,18 @@
 
 <head>
   <meta charset="utf-8">
-  <title>Students list</title>
   <link rel="stylesheet" type="text/css" href="index.css">
+    <link href="https://fonts.googleapis.com/css?family=Merriweather" rel="stylesheet">
+    <title>Таблица студентов</title>
+    <link rel="shortcut icon" href="icon.png" type="image/png">
 </head>
 
 <body>
-  <div onselectstart="return false"  onmousedown="return false">
-      <h1 id = "head">Загрузите список студентов!</h1>
-     <button onclick="loadStudents()" id="button">Начать загрузку</button>
+  <div>
+      <h1 id = "header">Загрузите список студентов!</h1>
+
+     <button id="button">Начать загрузку</button>
+
     <div id="ballsWaveG" style="visibility: hidden">
       <div id="ballsWaveG_1" class="ballsWaveG"></div>
       <div id="ballsWaveG_2" class="ballsWaveG"></div>
@@ -21,12 +25,34 @@
       <div id="ballsWaveG_7" class="ballsWaveG"></div>
       <div id="ballsWaveG_8" class="ballsWaveG"></div>
     </div>
-     <table id="table"></table>
+
+     <table onselectstart="return false" id="table" style="visibility: hidden" width="70%">
+         <thead>
+         <tr>
+            <th data-type="number">№</th>
+            <th data-type="string">Имя</th>
+            <th data-type="string">Фамилия</th>
+            <th data-type="number">Средний бал</th>
+            <th data-type="number">Группа</th>
+             <th>Добавить к сравнению</th>
+         </tr>
+         </thead>
+         <tbody id = 'tableBody'>
+         </tbody>
+     </table>
+
+
+      <a href = 'compare/index.html' id = 'compare' class="button" style="visibility: hidden">Сравнить</a>
+
+      <button id = 'uncheck' style="visibility: hidden">Снять выделение</button>
+
     <div class="studentCard" id="studentCard" style="visibility: hidden">
-      <h2>Сведения о студенте</h2>
-      <div id = "studData"></div>
-      <button id = "returnTable">Вернуться к таблице</button>
+        <h2>Сведения о студенте</h2>
+        <img id = "photo" src="">
+         <div id = "studData"></div>
+         <button id = "returnTable">Вернуться к таблице</button>
     </div>
+
      <script src="index.js"></script>
      </div>
 
