@@ -206,6 +206,8 @@
         table.style.visibility = 'visible';
         table.style.position = '';
         studentCard.style.visibility = 'hidden';
+        document.getElementById('photo').setAttribute("src", "");
+        studData.innerHTML = '';
         header.innerHTML = 'Список студентов';
         localStorage.removeItem('cardRow');
     }
